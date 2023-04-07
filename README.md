@@ -1,5 +1,5 @@
-# alanode-express-boiler
-An extensive boilerplate for NodeJS
+# Alanode Express Boiler
+An extensive boilerplate for NodeJS and Express, with Prisma ORM. Offering Authentication, Authorization, Validation, Sanitization, Error Handling, Logging, and Environmental Configuration.
 
 
 # Node.js, Express, and Prisma Boilerplate
@@ -43,7 +43,7 @@ I've added Dockerfile to run the application on a server. I will be creating a d
 
 To use this boilerplate for your new project, follow these steps:
 
-**1. Clone the repository to your local machine.
+**1. Clone the repository to your local machine.**
 
 ~~~
 git clone https://github.com/icyrizard/alanode-boiler.git
