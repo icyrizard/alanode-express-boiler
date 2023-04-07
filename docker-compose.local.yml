@@ -1,0 +1,13 @@
+version: '3'
+services:
+    app:
+        image: alanode-portal-service:${TAG}
+        ports:
+            - "6001:6001"
+        env_file:
+            - .env.local
+        build:
+            context: ./
+            dockerfile: Dockerfile
+            args:
+                BUILD_ENV: develop

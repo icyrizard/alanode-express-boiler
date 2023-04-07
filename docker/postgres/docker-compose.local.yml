@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgres:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+        BUILD_ENV: develop
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: alanode
+      POSTGRES_USER: alanode
+      POSTGRES_PASSWORD: alanode
+    volumes:
+      - ./data:/var/lib/postgresql/data

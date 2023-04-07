@@ -1,0 +1,76 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions", "views", "filteredRelationCount"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [uuidOssp(map: "uuid-ossp")]
+}
+
+model User {
+  id                    Int       @id @default(autoincrement())
+  email                 String    @unique @db.VarChar(64)
+  role                  String    @db.VarChar(12)
+  firstName             String    @db.VarChar(32)
+  fullName              String?   @db.VarChar(64)
+  uuid                  String    @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lastName              String    @db.VarChar(63)
+  password              String?   @db.VarChar(255)
+  provider              String?   @db.VarChar(12)
+  resetPasswordToken    String?   @db.VarChar(64)
+  confirmationToken     String?   @db.VarChar(64)
+  blocked               Boolean   @default(false)
+  confirmed             Boolean   @default(false)
+  bio                   String?   @db.VarChar(63)
+  profilePictureMediaId Int?
+  profilePicture        Media?    @relation(fields: [profilePictureMediaId], references: [id])
+  lastActiveAt          DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  deletedAt             DateTime?
+  // or use this one for multi-tenant
+  // @@index([email, tenantId])
+
+  // add if multi-tenant
+  //  tenantId                     Int
+  //  tenant                       Tenant                @relation(fields: [tenantId], references: [id])
+  @@index([email])
+}
+
+//model Tenant {
+//  id                    Int                     @id @default(autoincrement())
+//  name                  String                  @db.VarChar(32)
+//  uuid                  String                  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//  createdAt             DateTime                @default(now())
+//  updatedAt             DateTime                @updatedAt
+//  deletedAt             DateTime?
+//  User                  User[]
+//}
+
+model Media {
+  id               Int       @id @default(autoincrement())
+  modelName        String?   @db.VarChar(32)
+  modelId          Int?
+  uuid             String    @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  parentId         Int?
+  parent           Media?    @relation("conversions", fields: [parentId], references: [id])
+  sizeName         String?   @db.VarChar(12) // small | medium | large | original | thumbnail
+  width            Int?
+  height           Int?
+  originalFileName String    @db.VarChar(128)
+  fullPath         String    @db.Text
+  fileName         String    @db.VarChar(64)
+  mimeType         String    @db.VarChar(128)
+  filesystem       String    @db.VarChar(8)
+  size             Int
+  order            String?   @db.VarChar(64)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+  User             User[]
+  conversions      Media[]   @relation("conversions")
+  //  tenantId         Int?
+  //  tenant           Tenant?            @relation(fields: [tenantId], references: [id])
+}
