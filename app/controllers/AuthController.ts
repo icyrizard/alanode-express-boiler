@@ -4,7 +4,6 @@ import { capitalize, jwtEncode } from "../lib/functions";
 import { userTransformer } from "../transformers/UserTransformer";
 import { AuthRequest } from "../types/Requests";
 import { prisma } from "../database/PrismaClient";
-import { Prisma } from '@prisma/client'
 import { BaseController } from "./BaseController";
 import authRepository from "../repositories/authRepository";
 import userRepository from "../repositories/userRepository";

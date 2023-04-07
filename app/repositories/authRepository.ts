@@ -9,7 +9,7 @@ import { AuthRequest } from "../types/Requests";
 import { addHours, differenceInMinutes } from "date-fns";
 
 export default {
-    createAuthorizationJwt(user, tenantId: null) {
+    createAuthorizationJwt(user, tenantId = null) {
         return jwtEncode({
             user: {
                 id: user.id,
