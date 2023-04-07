@@ -205,7 +205,4 @@ const prisma = (context: ApiContext = null, rest = {}): ContextAwarePrismaClient
     return prismaClient;
 }
 
-export {
-    prisma,
-    prismaClient,
-};
+export { prisma, prismaClient };
