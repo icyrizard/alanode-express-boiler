@@ -1,4 +1,4 @@
-import { NotFoundError, PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { NotFoundError } from '@prisma/client/runtime';
 
 import cookieParser from 'cookie-parser';
 import express from 'express';
@@ -9,9 +9,9 @@ import { Request, Response } from "express";
 import routers from './routers';
 import { ValidationError } from "./exceptions/ValidationError";
 import { ApiError } from "./exceptions/ApiError";
-import { cdnRouter } from "./routers/_cdnRouter";
 import logger from './common/logger';
 import { Prisma } from '@prisma/client';
+import cdnRouter from './routers/_cdnRouter';
 
 const app = express();
 

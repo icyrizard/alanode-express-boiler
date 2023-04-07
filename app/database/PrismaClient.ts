@@ -202,11 +202,10 @@ prismaClient.$use(async (params, next) => {
  * @param rest
  */
 const prisma = (context: ApiContext = null, rest = {}): ContextAwarePrismaClient => {
-    if (context?.tenantId) {
-        return prismaClient.$setContext({ ...rest, tenantId: context?.tenantId });
-    } else {
-        return prismaClient;
-    }
+    return prismaClient;
 }
 
-export { prisma, prismaClient };
+export {
+    prisma,
+    prismaClient,
+};

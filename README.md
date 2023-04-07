@@ -84,4 +84,19 @@ npm run migrate:dev
 npm run dev
 ~~~
 
+6. Customize the boilerplate to fit your project requirements. You can add new routes, middleware, models, and services as needed.
+
+## Contributing
+
+I welcome contributions to this boilerplate project! If you have any suggestions, bug reports, or improvements, feel free to open an issue or submit a pull request. Let's collaborate and make this boilerplate even better together!
+
+## License
+
+This boilerplate is open source and available under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+I would like to express my gratitude to the open source community and the creators of Node.js, Express and other libraries
+
+
 

@@ -45,4 +45,4 @@ userRouter.put('/me',
     })
 )
 
-export { userRouter };
+export default userRouter;
