@@ -43,27 +43,28 @@ I've added Dockerfile to run the application on a server. I will be creating a d
 
 To use this boilerplate for your new project, follow these steps:
 
-1. Clone the repository to your local machine.
+**1. Clone the repository to your local machine.
 
 ~~~
 git clone https://github.com/icyrizard/alanode-boiler.git
 ~~~
 
-2. Initialize the database for local development.
+**2. Initialize the database for local development.**
 
 > Make sure you have docker installed, and have `make` on your machine, or run the commands from the makefile
 
 ~~~
 make dbup
 ~~~
+
 > This creates a new database using the following as username and password:
 > ~~~
 > POSTGRES_DB: alanode
 > POSTGRES_USER: alanode
 > POSTGRES_PASSWORD: alanode
-~~~
+> ~~~
 
-3. Run the install and migration creation.
+**3. Run the install and migration creation.**
 
 This will install the packages from the package.json, init prisma, create a migrations (but doesn't migrate yet!).
 
@@ -75,6 +76,12 @@ npm run init
 
 ~~~
 npm run migrate:dev
+~~~
+
+5. Run the project.
+
+~~~
+npm run dev
 ~~~
 
 
