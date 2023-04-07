@@ -77,7 +77,7 @@ export default {
             decodedJwt = jwtDecode(token, process.env.JWT_SECRET_SESSION);
         } catch (e) {
             return res.status(401).json({
-                message: '5 Invalid authentication, try to re-login',
+                message: 'Invalid authentication, try to re-login',
             });
         }
 

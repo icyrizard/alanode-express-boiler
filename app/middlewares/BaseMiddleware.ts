@@ -1,7 +1,6 @@
 import { intersection, isEmpty } from 'lodash';
 import { AuthRequest } from "../types/Requests";
 import { Response } from "express";
-import { container } from "../lib/container";
 import Roles from "../config/Roles";
 
 export class BaseMiddleware {
@@ -18,7 +17,7 @@ export class BaseMiddleware {
 
         if (!userId) {
             return res.status(401).json({
-                message: '3 Invalid authentication, try to re-login.',
+                message: 'Invalid authentication, try to re-login.',
             });
         }
 
@@ -26,7 +25,7 @@ export class BaseMiddleware {
 
         if (!tenantId) {
             return res.status(401).json({
-                message: '4 Invalid authentication, try to re-login.',
+                message: 'Invalid authentication, try to re-login.',
             });
         }
 
