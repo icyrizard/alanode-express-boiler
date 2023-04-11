@@ -37,7 +37,7 @@ const FilterMap: FilterMapType = {
 }
 
 export default {
-    updateLastActive(userId, context: ApiContext): Promise<UserWithInclude> {
+    updateLastActive(userId: number, context: ApiContext): Promise<UserWithInclude> {
         return prisma(context).user.update({
             where: {
                 id: userId,
