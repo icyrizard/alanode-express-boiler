@@ -24,7 +24,7 @@ export interface UserCreateBody {
     lastName: string;
 }
 
-export interface UserUpdateMeBody extends Omit<UserCreateBody, "password" > {
+export interface UserUpdateMeBody extends Omit<UserCreateBody, "password" | "email" > {
     newPassword?: string;
     currentPassword?: string;
 }
