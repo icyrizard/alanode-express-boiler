@@ -10,3 +10,5 @@ export interface MediaWithInclude extends Media {
 export interface UserWithInclude extends User {
     profilePicture: MediaWithInclude;
 }
+
+export type ResultWithCount<PrismaTableType> = [PrismaTableType, number];

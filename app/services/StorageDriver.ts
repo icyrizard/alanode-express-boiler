@@ -36,18 +36,7 @@ export default class StorageDriver {
     public getPath(destPath: string) {
         return this.driver.getPath(destPath)
     }
-
-    public get(destPath: string) {
-        return this.driver.get(destPath)
-    }
-
-    public remove(destPath: string) {
-        return this.driver.remove(destPath)
-    }
-
-    public exists(destPath: string) {
-        return this.driver.exists(destPath)
-    }
 }
+
 // application/pdf
 //filesystem

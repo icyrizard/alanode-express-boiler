@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { JwtAuthDecoded } from "../types/Auth";
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, merge } from 'lodash';
 import { ParsedQs } from "qs";
 import { FilterMapType, SortByMapType } from "../types/Filter";
 import validations from "../messages/en/validations";
-import { merge } from "lodash";
 import { parse } from "date-fns";
+import { Params } from "../types/Common";
 
 export type QueryParams = {
   [key: string]: string;
@@ -18,12 +18,6 @@ export const uses = function ({ context, fn, ...args }) {
     } catch (error) {
       next(error);
     }
-
-    // console.log({result})
-    //
-    // // @ts-ignore
-    // result.catch((error) => {
-    // });
   } }
 
 export const jwtEncode = function (data, expiresIn = "7d", secret = process.env.JWT_SECRET) {
@@ -42,7 +36,7 @@ export const jwtEncode = function (data, expiresIn = "7d", secret = process.env.
  * @param value
  * @param type
  */
-function parseToType(value, type: "int" | "string" | "boolean") {
+function parseToType(value: any, type: "int" | "string" | "boolean") {
   return {
     'int': () => parseInt(value),
     'string': () => value.toString(),
@@ -51,7 +45,7 @@ function parseToType(value, type: "int" | "string" | "boolean") {
   }[type]()
 }
 
-export function validationMessage(validatorKey, params = {}) {
+export function validationMessage(validatorKey: string, params: Params = {}): string {
   let messageTemplate = get(validations, validatorKey) ?? validations['default'];
 
   messageTemplate = messageTemplate.replace(":value", params);
@@ -59,10 +53,10 @@ export function validationMessage(validatorKey, params = {}) {
   return messageTemplate.replace(":value", params);
 }
 
-export function getSortMapByKey(sortMap) {
+export function getSortMapByKey(sortMapSerialized: string): SortByMapType {
   const result = {};
 
-  for (const item of sortMap) {
+  for (const item of sortMapSerialized) {
     const [field, order] = item.split(':');
     result[field] = order;
   }
@@ -171,7 +165,7 @@ export const jwtDecode = function (token, secret = process.env.JWT_SECRET): JwtA
   return jwt.verify(token, secret) as JwtAuthDecoded;
 }
 
-export const capitalize = function (str) {
+export const capitalize = function (str: string): string {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
 }
 

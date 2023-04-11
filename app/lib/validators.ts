@@ -72,7 +72,7 @@ export const iban = function (value) {
     return regExp.test(value);
 }
 
-export const sortBy = function (value) {
+export const sortBy = function (value: string) {
     if (!string(value)) {
         return
     }

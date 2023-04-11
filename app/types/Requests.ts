@@ -12,3 +12,7 @@ export interface AuthRequest extends Request {
     context: ApiContext,
     files?: FileArray | null | undefined;
 }
+
+export interface BodyType {
+    [key: string]: any;
+}

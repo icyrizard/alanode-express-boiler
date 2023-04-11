@@ -7,9 +7,11 @@ import { prisma } from "../database/PrismaClient";
 import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { ValidationError } from "../exceptions/ValidationError";
-import { capitalize, getQueryFilter } from "../lib/functions";
-import { ApiContext, AuthRequest } from "../types/Requests";
+import { getQueryFilter } from "../lib/functions";
+import { ApiContext, BodyType } from "../types/Requests";
 import { FilterMapType } from "../types/Filter";
+import { ResultWithCount, UserWithInclude } from "../types/DbTypes";
+import { ParsedQs } from "qs";
 
 const FilterMap: FilterMapType = {
     email: {
@@ -35,7 +37,7 @@ const FilterMap: FilterMapType = {
 }
 
 export default {
-    updateLastActive(userId, context: ApiContext) {
+    updateLastActive(userId, context: ApiContext): Promise<UserWithInclude> {
         return prisma(context).user.update({
             where: {
                 id: userId,
@@ -55,7 +57,7 @@ export default {
         });
     },
 
-    async findOne(context: ApiContext, userId: number) {
+    async findOne(context: ApiContext, userId: number): Promise<UserWithInclude> {
         return await prisma(context).user.findFirstOrThrow({
             where: {id: userId},
             include: {
@@ -70,12 +72,10 @@ export default {
         })
     },
 
-    async findAll(context: ApiContext, page, limit, query) {
+    findAll: async function (context: ApiContext, page: number, limit: number, query: ParsedQs): Promise<ResultWithCount<UserWithInclude[]>> {
         let {where} = getQueryFilter(FilterMap, query);
 
         let include = {
-            tenant: true,
-            worker: true,
             profilePicture: {
                 include: {
                     conversions: true
@@ -83,22 +83,20 @@ export default {
             },
         }
 
-        return prisma().$transaction(async () => {
-            const count = await prisma(context).user.count({where});
-            const users = await prisma(context).user.findMany({
-                skip: (page - 1) * limit,
-                take: limit,
-                include: {
-                    ...include,
-                },
-                where,
-            })
+        const count = await prisma(context).user.count({where});
+        const users = await prisma(context).user.findMany({
+            skip: (page - 1) * limit,
+            take: limit,
+            include: {
+                ...include,
+            },
+            where,
+        })
 
-            return [users, count, page, limit];
-        }) as any;
+        return [users, count];
     },
 
-    async updateMe(user: User, body, context: ApiContext) {
+    async updateMe(user: User, body: BodyType, context: ApiContext): Promise<UserWithInclude> {
         const userData = {} as Prisma.UserUncheckedCreateInput;
 
         userData.firstName = body.firstName;
@@ -130,7 +128,7 @@ export default {
         });
     },
 
-    async update(user, body, context: ApiContext) {
+    async update(user: User, body: BodyType, context: ApiContext): Promise<User> {
         const userData = {} as Prisma.UserCreateInput;
 
         userData.email = body.email;
@@ -143,7 +141,9 @@ export default {
         }
 
         return prisma(context).user.update({
-            where: {id: parseInt(user.id)},
+            where: {
+                id: user.id,
+            },
             data: userData,
         });
     }

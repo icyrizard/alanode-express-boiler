@@ -1,6 +1,4 @@
 /**
- * https://maximorlov.com/parallel-tasks-with-pure-javascript/
- *
  * First, we create an array of Length "max" concurrency.
  * tasks.entries() is used get an iterator with [{ index1: task1, index2: task2 }]
  *
@@ -12,7 +10,9 @@
  * @param tasks
  * @param concurrency
  */
-export const parallel = async(tasks, concurrency) => {
+import { TaskList } from "../types/Common";
+
+export const parallel = async(tasks: TaskList, concurrency: number) => {
   const results = [];
 
   async function runTasks(tasksIterator) {

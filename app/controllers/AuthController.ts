@@ -11,6 +11,7 @@ import userRepository from "../repositories/userRepository";
 export class AuthController extends BaseController {
     public async ping(req: AuthRequest, res: Response) {
         authRepository.refreshSessionToken(req, res);
+
         await userRepository.updateLastActive(req.context.userId, req.context);
 
         return res.json({status: 'ok'})

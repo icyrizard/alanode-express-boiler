@@ -78,15 +78,4 @@ export default class S3Driver extends BaseStorageDriver {
             console.log('Failed uploading file: ', error)
         });
     }
-
-    public async remove(destFilePath:string) {
-        return true;
-    }
-
-    public async exists(destFilePath:string) {
-        return true;
-    }
-
-    get() {
-    }
 }

@@ -6,11 +6,7 @@ import BaseStorageDriver from "./BaseStorageDriver";
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'local'}` })
 
 export default class FilesystemDriver extends BaseStorageDriver {
-    public async get(destFilePath: string) {
-        return true;
-    }
-
-    public getPath(path: string) {
+    public getPath(path: string): string {
         return process.env.API_URL + '/storage/' + path;
     }
 
@@ -23,8 +19,6 @@ export default class FilesystemDriver extends BaseStorageDriver {
             if (err) {
                 throw err
             }
-
-            console.log('Successfully moved')
         })
     }
 
@@ -52,13 +46,4 @@ export default class FilesystemDriver extends BaseStorageDriver {
             }
         });
     }
-
-    public async remove(destFilePath:string) {
-        return true;
-    }
-
-    public async exists(destFilePath:string) {
-        return true;
-    }
-
 }

@@ -22,6 +22,6 @@ export function userTransformer() {
 
     return {
         transform,
-        transformList: transformList(transform),
+        transformList: transformList<UserWithInclude[]>(transform),
     }
 }

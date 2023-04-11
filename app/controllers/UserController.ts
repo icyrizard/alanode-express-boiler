@@ -4,6 +4,7 @@ import { prisma } from "../database/PrismaClient";
 import { userTransformer } from "../transformers/UserTransformer";
 import { BaseController } from "./BaseController";
 import userRepository from "../repositories/userRepository";
+import { UserWithInclude } from "../types/DbTypes";
 
 export class UserController extends BaseController {
     readonly rules = {
@@ -46,7 +47,7 @@ export class UserController extends BaseController {
                     }
                 },
             },
-        });
+        }) as UserWithInclude;
 
         const userTransformed = userTransformer().transform(user);
 

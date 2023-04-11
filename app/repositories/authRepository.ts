@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { User } from '@prisma/client';
 import { jwtDecode, jwtEncode } from "../lib/functions";
 import { AuthRequest } from "../types/Requests";
 /**
@@ -7,9 +8,10 @@ import { AuthRequest } from "../types/Requests";
  * @private
  */
 import { addHours, differenceInMinutes } from "date-fns";
+import { JwtAuthDecoded } from "../types/Auth";
 
 export default {
-    createAuthorizationJwt(user, tenantId = null) {
+    createAuthorizationJwt(user: User, tenantId: number = null) {
         return jwtEncode({
             user: {
                 id: user.id,
@@ -27,7 +29,7 @@ export default {
      * @param res
      * @param decodedJwt
      */
-    setNewSessionToken(res: Response, decodedJwt) {
+    setNewSessionToken(res: Response, decodedJwt: JwtAuthDecoded) {
         const sessionToken = jwtEncode({
             user: {
                 id: decodedJwt.user.id,
