@@ -16,3 +16,15 @@ export interface AuthRequest extends Request {
 export interface BodyType {
     [key: string]: any;
 }
+
+export interface UserCreateBody {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+}
+
+export interface UserUpdateMeBody extends Omit<UserCreateBody, "password" > {
+    newPassword?: string;
+    currentPassword?: string;
+}

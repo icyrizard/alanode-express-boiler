@@ -26,11 +26,11 @@ export default class EmailService {
 
         // send mail with defined transport object
         return await transporter.sendMail({
-            from: from, //'"Fred Foo 👻" <foo@example.com>', // sender address
-            to: to, //"bar@example.com, baz@example.com", // list of receivers
-            subject: subject, //"Hello ✔", // Subject line
-            text: text, // "Hello world?", // plain text body
-            html: html, //"<b>Hello world?</b>", // html body
+            from: from,
+            to: to,
+            subject: subject,
+            text: text,
+            html: html,
         });
     }
 }

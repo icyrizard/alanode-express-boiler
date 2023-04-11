@@ -14,7 +14,7 @@ export type QueryParams = {
 export const uses = function ({ context, fn, ...args }) {
   return async (req, res, next) => {
     try {
-      await fn.apply(context, [req, res, next, args])
+      return await fn.apply(context, [req, res, next, args])
     } catch (error) {
       next(error);
     }

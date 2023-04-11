@@ -8,7 +8,7 @@ import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { ValidationError } from "../exceptions/ValidationError";
 import { getQueryFilter } from "../lib/functions";
-import { ApiContext, BodyType } from "../types/Requests";
+import { ApiContext, UserUpdateBody, UserUpdateMeBody } from "../types/Requests";
 import { FilterMapType } from "../types/Filter";
 import { ResultWithCount, UserWithInclude } from "../types/DbTypes";
 import { ParsedQs } from "qs";
@@ -96,7 +96,12 @@ export default {
         return [users, count];
     },
 
-    async updateMe(user: User, body: BodyType, context: ApiContext): Promise<UserWithInclude> {
+    /**
+     * @param user
+     * @param body
+     * @param context
+     */
+    async updateMe(context: ApiContext, user: User, body: UserUpdateMeBody): Promise<UserWithInclude> {
         const userData = {} as Prisma.UserUncheckedCreateInput;
 
         userData.firstName = body.firstName;
@@ -128,13 +133,19 @@ export default {
         });
     },
 
-    async update(user: User, body: BodyType, context: ApiContext): Promise<User> {
+    /**
+     * Note: This is meant as an admin update.
+     *
+     * @param context
+     * @param user
+     * @param body
+     */
+    async update(context: ApiContext, user: User, body: UserUpdateBody): Promise<UserWithInclude> {
         const userData = {} as Prisma.UserCreateInput;
 
         userData.email = body.email;
         userData.firstName = body.firstName;
         userData.lastName = body.lastName;
-        userData.role = body.role;
 
         if (body.newPassword) {
             userData.password = bcrypt.hashSync(body.newPassword, 10);
@@ -145,6 +156,13 @@ export default {
                 id: user.id,
             },
             data: userData,
+            include: {
+                profilePicture: {
+                    include: {
+                        conversions: true,
+                    }
+                }
+            }
         });
     }
 }

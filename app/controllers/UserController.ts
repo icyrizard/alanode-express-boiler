@@ -74,7 +74,8 @@ export class UserController extends BaseController {
             },
         })
 
-        const user = await userRepository.updateMe(existingUser, params, req.context)
+        const user = await userRepository.updateMe(req.context, existingUser, params)
+
         const userTransformed = userTransformer().transform(user);
 
         return res.json(userTransformed);

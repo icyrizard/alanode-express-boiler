@@ -11,7 +11,7 @@ import { addHours, differenceInMinutes } from "date-fns";
 import { JwtAuthDecoded } from "../types/Auth";
 
 export default {
-    createAuthorizationJwt(user: User, tenantId: number = null) {
+    createAuthorizationJwt(user: User, tenantId: number = null): string {
         return jwtEncode({
             user: {
                 id: user.id,
