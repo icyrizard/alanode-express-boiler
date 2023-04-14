@@ -6,10 +6,7 @@ import { FilterMapType, SortByMapType } from "../types/Filter";
 import validations from "../messages/en/validations";
 import { parse } from "date-fns";
 import { Params } from "../types/Common";
-
-export type QueryParams = {
-  [key: string]: string;
-}
+import { Prisma } from "@prisma/client";
 
 export const uses = function ({ context, fn, ...args }) {
   return async (req, res, next) => {
@@ -20,7 +17,7 @@ export const uses = function ({ context, fn, ...args }) {
     }
   } }
 
-export const jwtEncode = function (data, expiresIn = "7d", secret = process.env.JWT_SECRET) {
+export const jwtEncode = function (data: Record<string | number, any>, expiresIn: string = "7d", secret: string = process.env.JWT_SECRET) {
   return jwt.sign({
     ...data,
     iat: Math.floor(Date.now() / 1000) - 30
@@ -99,7 +96,7 @@ export function getQuerySortBy(sortMap: SortByMapType, queryParams: ParsedQs) {
  * @param filterMap
  * @param queryParams
  */
-export function getQueryFilter(filterMap: FilterMapType, queryParams: ParsedQs): { where: any, include: any } {
+export function getQueryFilter(filterMap: FilterMapType, queryParams: ParsedQs): { where: Record<string, any>, include: Record<string, any> } {
   const where = {};
   const include = {}
 

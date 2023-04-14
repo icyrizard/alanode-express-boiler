@@ -1,8 +1,10 @@
+import { ValidationError } from "./ValidationError";
+
 export class ApiError extends Error {
-    public errors: any;
+    public errors: ValidationError[] | null;
     public code: number;
 
-    constructor(message, code = 409, errors = null) {
+    constructor(message: string, code: number = 409, errors: ValidationError[] = null) {
         super('Api Error');
 
         this.name = "ApiError";

@@ -8,7 +8,7 @@ import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { ValidationError } from "../exceptions/ValidationError";
 import { getQueryFilter } from "../lib/functions";
-import { ApiContext, UserUpdateBody, UserUpdateMeBody } from "../types/Requests";
+import { ApiContext, UserUpdateMeBody } from "../types/Requests";
 import { FilterMapType } from "../types/Filter";
 import { ResultWithCount, UserWithInclude } from "../types/DbTypes";
 import { ParsedQs } from "qs";
@@ -37,7 +37,7 @@ const FilterMap: FilterMapType = {
 }
 
 export default {
-    updateLastActive(userId: number, context: ApiContext): Promise<UserWithInclude> {
+    updateLastActive(context: ApiContext, userId: number): Promise<UserWithInclude> {
         return prisma(context).user.update({
             where: {
                 id: userId,

@@ -1,8 +1,11 @@
-export class ValidationError extends Error {
-    public errors: any;
+import { ValidatorObjectType } from "../types/Validators";
 
-    constructor(errors) {
+export class ValidationError extends Error {
+    public errors: ValidatorObjectType;
+
+    constructor(errors: ValidatorObjectType) {
         super('validation error');
+
         this.name = "ValidationError";
         this.errors = errors;
     }

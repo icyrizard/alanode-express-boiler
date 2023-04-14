@@ -12,7 +12,7 @@ export class AuthController extends BaseController {
     public async ping(req: AuthRequest, res: Response) {
         authRepository.refreshSessionToken(req, res);
 
-        await userRepository.updateLastActive(req.context.userId, req.context);
+        await userRepository.updateLastActive(req.context, req.context.userId);
 
         return res.json({status: 'ok'})
     }
@@ -56,7 +56,7 @@ export class AuthController extends BaseController {
             });
         }
 
-        const userUpdated = await userRepository.updateLastActive(user.id, req.context);
+        const userUpdated = await userRepository.updateLastActive(req.context, req.context.userId);
         const userTransformed = userTransformer().transform(userUpdated);
 
         const token = authRepository.createAuthorizationJwt(user);

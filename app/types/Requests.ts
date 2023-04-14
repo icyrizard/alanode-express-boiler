@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { FileArray } from "express-fileupload";
+import { ValidationErrorsType } from "aws-sdk/clients/secretsmanager";
 
 export type ApiContext = {
     credentials?: any;
@@ -11,10 +12,6 @@ export type ApiContext = {
 export interface AuthRequest extends Request {
     context: ApiContext,
     files?: FileArray | null | undefined;
-}
-
-export interface BodyType {
-    [key: string]: any;
 }
 
 export interface UserCreateBody {
