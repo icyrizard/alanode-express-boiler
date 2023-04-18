@@ -56,7 +56,7 @@ export class AuthController extends BaseController {
             });
         }
 
-        const userUpdated = await userRepository.updateLastActive(req.context, req.context.userId);
+        const userUpdated = await userRepository.updateLastActive(req.context, user.id);
         const userTransformed = userTransformer().transform(userUpdated);
 
         const token = authRepository.createAuthorizationJwt(user);

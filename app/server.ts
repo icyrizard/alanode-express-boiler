@@ -1,4 +1,4 @@
-import { NotFoundError } from '@prisma/client/runtime';
+import { NotFoundError } from '@prisma/client/runtime/binary';
 
 import cookieParser from 'cookie-parser';
 import express from 'express';
