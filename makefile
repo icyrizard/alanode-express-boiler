@@ -3,3 +3,6 @@ dbup:
 
 dbdown:
 	docker-compose -f docker/postgres/docker-compose.local.yml down
+
+test-watch:
+	./scripts/run-integration-watch.sh

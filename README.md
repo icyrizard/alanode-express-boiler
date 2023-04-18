@@ -86,6 +86,15 @@ npm run dev
 
 6. Customize the boilerplate to fit your project requirements. You can add new routes, middleware, models, and services as needed.
 
+## Testing
+Make sure to up the database and add a database called 'test'. We just assume this table is there to make it easier to run the tests
+and keep it in sync amongst the developers.
+
+~~~
+$ make dbup
+$ make test-watch
+~~~
+
 ## Contributing
 
 I welcome contributions to this boilerplate project! If you have any suggestions, bug reports, or improvements, feel free to open an issue or submit a pull request. Let's collaborate and make this boilerplate even better together!
