@@ -1,5 +1,5 @@
 # Alanode Express Boiler
-An extensive boilerplate for NodeJS and Express, with Prisma ORM. Offering Authentication, Authorization, Validation, Sanitization, Error Handling, Logging, and Environmental Configuration.
+An extensive boilerplate for NodeJS and Express, with Prisma ORM. Offering Authentication, Authorization, Validation, Error Handling, Logging, and Environmental Configuration.
 
 
 # Node.js, Express, and Prisma Boilerplate
