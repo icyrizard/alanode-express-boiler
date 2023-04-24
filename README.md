@@ -28,7 +28,7 @@ The boilerplate includes a basic authentication and authorization system using P
 The boilerplate includes error handling middleware to gracefully handle errors and provide meaningful error responses to clients. It also includes custom error classes for different types of errors, making it easy to extend and customize error handling logic.
 
 - **Validation and Sanitization**: 
-The boilerplate includes validation and sanitization middleware using popular libraries like Joi and Express-validator, which helps in validating and sanitizing incoming request data, ensuring that only valid data is processed by the application.
+The boilerplate includes validation which helps in validating and sanitizing incoming request data, ensuring that only valid data is processed by the application.
 
 - **Environmental Configuration**: 
 The boilerplate includes a configuration setup that allows you to define and manage different configurations for different environments (such as development, production, and testing) using environment variables. This makes it easy to manage sensitive data like API keys and database credentials across different environments.
