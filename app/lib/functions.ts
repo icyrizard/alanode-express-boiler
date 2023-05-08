@@ -8,6 +8,8 @@ import { parse } from "date-fns";
 import { Params } from "../types/Common";
 import { Prisma } from "@prisma/client";
 
+export type QueryParams = Partial<ParsedQs>;
+
 export const uses = function ({ context, fn, ...args }) {
   return async (req, res, next) => {
     try {
@@ -50,7 +52,7 @@ export function validationMessage(validatorKey: string, params: Params = {}): st
   return messageTemplate.replace(":value", params);
 }
 
-export function getSortMapByKey(sortMapSerialized: string): SortByMapType {
+export function getSortMapByKey(sortMapSerialized: string[]): SortByMapType {
   const result = {};
 
   for (const item of sortMapSerialized) {
@@ -61,11 +63,10 @@ export function getSortMapByKey(sortMapSerialized: string): SortByMapType {
   return result;
 }
 
-export function getQuerySortBy(sortMap: SortByMapType, queryParams: ParsedQs) {
+export function getQuerySortBy(sortMap: SortByMapType, queryParams: { sortBy: string } & QueryParams) {
   const orderBy = [];
   const orderByRelated = {};
 
-  //@ts-ignore
   const sortBy = queryParams.sortBy ? queryParams?.sortBy.split(','): [];
   const sortMapByKey = getSortMapByKey(sortBy);
 
