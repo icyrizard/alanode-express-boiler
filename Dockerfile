@@ -13,17 +13,12 @@ ARG NODE_ENV
 
 WORKDIR /app
 
-COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 RUN npm run build
 
-FROM node:16-alpine3.16 AS runner
-
-
-RUN npm install pm2 -g
-
-WORKDIR /app
+FROM node:16-alpine3.16 AS base
 
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
@@ -31,9 +26,10 @@ ENV NODE_ENV $NODE_ENV
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S alanode -u 1001
 
-# RUN chown alanode:nodejs /app
+WORKDIR /app
 
-COPY --from=builder /app/dist /app/dist
+RUN npm install pm2 -g
+
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./
@@ -42,10 +38,18 @@ COPY --from=builder /app/entrypoint.sh ./
 RUN chown -R alanode:nodejs /usr/local/bin/pm2
 RUN chown -R alanode:nodejs /usr/local/bin/pm2-runtime
 
+FROM base AS runner
+
+WORKDIR /app
+
+ARG NODE_ENV
+ENV NODE_ENV $NODE_ENV
+
+COPY --from=builder /app/dist /app/dist
+
 EXPOSE 80
 # USER alanode
 
 RUN npm run prisma:init
-
 
 CMD ["./entrypoint.sh"]

@@ -30,6 +30,15 @@ The boilerplate includes error handling middleware to gracefully handle errors a
 - **Validation and Sanitization**: 
 The boilerplate includes validation which helps in validating and sanitizing incoming request data, ensuring that only valid data is processed by the application.
 
+- **Event Handling**
+This project offers a way to emit and respond to predefined events. An example of this is given when a new user is created.
+
+- **Job scheduling**
+This project includes an easy way of scheduling jobs using pg-boss. Events can be registered as scheduled jobs making it easy to run logic at any (scheduled) time.
+
+- **Emailing**
+This project includes a way to send emails using nodemailer. It is easy to add new templates and send emails using the email service. Templates are created using React. See the templates folder for a sample template.
+
 - **Environmental Configuration**: 
 The boilerplate includes a configuration setup that allows you to define and manage different configurations for different environments (such as development, production, and testing) using environment variables. This makes it easy to manage sensitive data like API keys and database credentials across different environments.
 
@@ -93,6 +102,20 @@ and keep it in sync amongst the developers.
 ~~~
 $ make dbup
 $ make test-watch
+~~~
+
+## Register a new user
+
+~~~bash
+curl --location 'http://localhost:6001/api/auth/local/register' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+    "password": "Test-1232-ABC",
+    "email": "info@abc.com",
+    "firstName": "Testing",
+    "lastName": "Alanode",
+    "signupSecret": "you-may-never-know"
+}'
 ~~~
 
 ## Contributing

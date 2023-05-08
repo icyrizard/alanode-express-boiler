@@ -1,6 +1,8 @@
 import "reflect-metadata";
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'local'}` })
 
+import './bootstrap'
+
 import app from './server';
 import logger from "./common/logger";
 import { prismaClient } from "./database/PrismaClient";

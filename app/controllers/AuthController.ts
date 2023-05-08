@@ -7,6 +7,9 @@ import { prisma } from "../database/PrismaClient";
 import { BaseController } from "./BaseController";
 import authRepository from "../repositories/authRepository";
 import userRepository from "../repositories/userRepository";
+import { EventBus } from "../services/EventBus";
+import { UserRegisteredEventHandler } from "../events/handlers/UserRegisteredEventHandler";
+import { UserRegisteredEvent } from "../events/impl/UserRegisteredEvent";
 
 export class AuthController extends BaseController {
     public async ping(req: AuthRequest, res: Response) {
@@ -102,8 +105,6 @@ export class AuthController extends BaseController {
             });
         }
 
-        // const hashedPassword = await bcrypt.hash(params.password, 10);
-
         const user = await prisma(req.context).user.create({
             data: {
                 email: email,
@@ -124,6 +125,8 @@ export class AuthController extends BaseController {
                 }
             })
         })
+
+        EventBus.getInstance().emit(new UserRegisteredEvent(user, req.context));
 
         const token = jwtEncode({
             user: {
