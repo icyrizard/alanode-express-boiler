@@ -105,7 +105,7 @@ This boilerplate is open source and available under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
-I would like to express my gratitude to the open source community and the creators of Node.js, Express and other libraries
+I would like to express my gratitude to the open source community and the creators of Node.js, Express, PrismaORM and other libraries
 
 
 

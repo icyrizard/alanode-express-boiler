@@ -102,16 +102,28 @@ export class AuthController extends BaseController {
             });
         }
 
+        // const hashedPassword = await bcrypt.hash(params.password, 10);
+
         const user = await prisma(req.context).user.create({
             data: {
                 email: email,
                 firstName: firstName,
                 lastName: lastName,
-                password: bcrypt.hashSync(params.password, 10),
                 role: "default",
                 // uncomment if multi-tenant needed.
                 // tenantId: parseInt(params.tenantId),
             }});
+
+        bcrypt.hash(params.password, 10).then((hashed) => {
+            return prisma(req.context).user.update({
+                where: {
+                    id: user.id,
+                },
+                data: {
+                    password: hashed
+                }
+            })
+        })
 
         const token = jwtEncode({
             user: {
