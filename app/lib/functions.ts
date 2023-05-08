@@ -6,7 +6,6 @@ import { FilterMapType, SortByMapType } from "../types/Filter";
 import validations from "../messages/en/validations";
 import { parse } from "date-fns";
 import { Params } from "../types/Common";
-import { Prisma } from "@prisma/client";
 
 export type QueryParams = Partial<ParsedQs>;
 

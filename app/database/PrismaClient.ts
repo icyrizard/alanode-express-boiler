@@ -21,7 +21,7 @@ function addContextProxy(model: Object, _context: DBContext) {
         get(target, p, receiver) {
             const method = Reflect.get(target, p, receiver);
 
-            if (typeof method !== 'function') {
+            if (typeof method !== 'function' || p === 'transaction') {
                 return method;
             }
 
@@ -157,7 +157,7 @@ export function softDeleteScope(query) {
     )
 }
 
-const Model = {
+const ModelMap = {
     User: {
         // tenantScoped: true,
         softDeleteScoped: true,
@@ -171,16 +171,17 @@ const Model = {
  * @private
  */
 prismaClient.$use(async (params, next) => {
-    if (Model[params.model] && Model[params.model]) {
+    if (ModelMap[params.model] && ModelMap[params.model]) {
         if (['findMany', 'find', 'findFirst', 'findFirstOrThrow', 'count', 'deleteMany', 'delete'].includes(params.action)) {
             // @ts-ignore
-            if (params.args?._context?.scoped === false) {
-                //@ts-ignore
-                delete(params.args?._context?.scoped);
-            }
+            if (params.args?._context?.scoped !== false) {
+                // if (ModelMap[params.model].tenantScoped && params.args?._context?.tenantId) {
+                //     params.args = tenantScope(params.args?._context?.tenantId, params.args)
+                // }
 
-            if (Model[params.model].softDeleteScoped) {
-                params.args = softDeleteScope(params.args)
+                if (ModelMap[params.model].softDeleteScoped && !params.args?.where?.deletedAt) {
+                    params.args = softDeleteScope(params.args)
+                }
             }
         }
     }
